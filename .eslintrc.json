@@ -1,8 +1,9 @@
 {
   "extends": [
-    "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
+    "next/core-web-vitals",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -12,6 +13,27 @@
   },
   "rules": {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "max-len": [
+      "warn",
+      {
+        "code": 120,
+        "ignoreUrls": true
+      }
+    ],
+    "no-unreachable": "error",
+    "no-console": [ "error", {"allow": ["warn", "info", "error"]} ],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "TSEnumDeclaration",
+        "message": "Don't declare enums"
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "verstion": "detect"
+    }
   }
 }

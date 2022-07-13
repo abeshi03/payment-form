@@ -1,0 +1,23 @@
+.labelAndRequiredBadge {
+
+  display: flex;
+  align-items: center;
+}
+
+.label {
+
+  font-size: 14px;
+}
+
+
+.requiredBadge {
+
+  font-size: 12px;
+  color: #C65151;
+  background: #ffe1e1;
+  border-radius: 5px;
+
+  margin-left: 10px;
+
+  padding: 3px 5px;
+}

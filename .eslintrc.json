@@ -16,13 +16,13 @@
     "max-len": [
       "warn",
       {
-        "code": 120,
+        "code": 130,
         "ignoreUrls": true
       }
     ],
     "no-unreachable": "error",
-    "no-console": [ "error", {"allow": ["warn", "info", "error"]} ],
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "no-console": [ "warn", {"allow": ["warn", "info", "error"]} ],
+    "@typescript-eslint/no-unused-vars": ["warn"],
     "no-restricted-syntax": [
       "error",
       {

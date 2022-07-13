@@ -1,3 +1,4 @@
 export type PaymentDataInputValues = {
-  cardNumber: string;
+  cardNumber: number;
+  securityCode: number;
 };

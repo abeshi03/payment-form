@@ -4,13 +4,20 @@ import { FieldError } from "react-hook-form";
 export const paymentDataValidations = {
   curdNumber: {
     required: true,
-    min: 12,
-    max: 16
+    min: 100000000000,
+    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+    max: 9999999999999999
   },
   securityCode: {
     required: true,
-    min: 3,
-    max: 4
+    min: 100,
+    max: 9999
+  },
+  name: {
+    required: true,
+    minLength: 1,
+    maxLength: 50,
+    pattern: /^[a-zA-Z]+$/
   }
 };
 
@@ -19,11 +26,11 @@ export const curdNumberErrorMessages = (error: FieldError) => {
     case "required":
       return "カード番号は必須です";
 
-    case "minLength":
-      return `${paymentDataValidations.curdNumber.min}以上で入力してください`;
+    case "min":
+      return "12 ~ 16桁で入力してください";
 
-    case "maxLength":
-      return `${paymentDataValidations.curdNumber.max}以内で入力してください`;
+    case "max":
+      return "12 ~ 16桁で入力してください";
   }
 };
 
@@ -32,10 +39,10 @@ export const securityCodeErrorMessages = (error: FieldError) => {
     case "required":
       return "セキュリティコードは必須です";
 
-    case "minLength":
-      return `${paymentDataValidations.curdNumber.min}以上で入力してください`;
+    case "min":
+      return "3 ~ 4桁で入力してください";
 
-    case "maxLength":
-      return `${paymentDataValidations.curdNumber.max}以内で入力してください`;
+    case "max":
+      return "3 ~ 4桁で入力してください";
   }
 };

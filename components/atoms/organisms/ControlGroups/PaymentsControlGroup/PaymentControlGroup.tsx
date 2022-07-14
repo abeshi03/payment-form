@@ -55,6 +55,35 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           })}
         />
         {errors.securityCode && securityCodeErrorMessages(errors.securityCode)}
+
+        <InputField
+          type="text"
+          required={true}
+          guidance="半角英字で入力してください"
+          placeholder="TARO"
+          label="カード名義(名)"
+          inputProps={register("givenName", {
+            required: paymentDataValidations.name.required,
+            minLength: paymentDataValidations.name.minLength,
+            maxLength: paymentDataValidations.name.maxLength,
+            pattern: paymentDataValidations.name.pattern
+          })}
+        />
+
+        <InputField
+          type="text"
+          required={true}
+          guidance="半角英字で入力してください"
+          placeholder="TANAKA"
+          label="カード名義(妙)"
+          inputProps={register("familyName", {
+            required: paymentDataValidations.name.required,
+            minLength: paymentDataValidations.name.minLength,
+            maxLength: paymentDataValidations.name.maxLength,
+            pattern: paymentDataValidations.name.pattern
+          })}
+        />
+
         <button type="submit">送信</button>
       </form>
     </>

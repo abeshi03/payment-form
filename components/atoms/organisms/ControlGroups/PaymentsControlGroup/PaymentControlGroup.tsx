@@ -7,6 +7,7 @@ import { InputField } from "../../../molecules/InputField/inputField";
 import { useForm } from "react-hook-form";
 import { PaymentDataInputValues } from "../../../../../pages/payments/ pageSettings";
 import {
+  addressErrorMessages,
   curdNumberErrorMessages,
   paymentDataValidations,
   postCodeErrorMessages,
@@ -104,13 +105,11 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           label="郵便番号"
           placeholder="1111111"
           required={true}
-          inputProps={{
-            ...register("postCode", {
-              required: paymentDataValidations.postCode.required,
-              min: paymentDataValidations.postCode.min,
-              max: paymentDataValidations.postCode.max
-            })
-          }}
+          inputProps={register("postCode", {
+            required: paymentDataValidations.postCode.required,
+            min: paymentDataValidations.postCode.min,
+            max: paymentDataValidations.postCode.max
+          })}
           onChange={(e) => searchAddress(e)}
         />
         {errors.postCode && postCodeErrorMessages(errors.postCode)}
@@ -122,14 +121,13 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           label="都道府県・市区町村・番地"
           guidance="数字と記号は半角で入力してください"
           defaultValue={address}
-          inputProps={{
-            ...register("address", {
-              required: paymentDataValidations.address.required,
-              minLength: paymentDataValidations.address.minLength,
-              maxLength: paymentDataValidations.address.maxLength
-            })
-          }}
+          inputProps={register("address", {
+            required: paymentDataValidations.address.required,
+            minLength: paymentDataValidations.address.minLength,
+            maxLength: paymentDataValidations.address.maxLength
+          })}
         />
+        {errors.address && addressErrorMessages(errors.address)}
 
         <button type="submit">送信</button>
       </form>

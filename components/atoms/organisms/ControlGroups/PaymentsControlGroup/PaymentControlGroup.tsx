@@ -1,5 +1,5 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
-import { FC, memo } from "react";
+import React, { FC, memo, useState } from "react";
 
 /* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./PaymentsControlGroup.module.scss";
@@ -9,6 +9,7 @@ import { PaymentDataInputValues } from "../../../../../pages/payments/ pageSetti
 import {
   curdNumberErrorMessages,
   paymentDataValidations,
+  postCodeErrorMessages,
   securityCodeErrorMessages
 } from "../../../../../validations/PaymentValidations";
 
@@ -25,6 +26,20 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
   } = useForm<PaymentDataInputValues>();
 
   const { className, submitFunction } = props;
+
+  const [address, setAddress] = useState("");
+
+  const searchAddress = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const postCode = e.target.value;
+    if (postCode.length < 7) return;
+
+    const res = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postCode}`);
+    const data: { results: { address1: string; address2: string; address3: string }[] } = await res.json();
+
+    if (!data.results) return;
+
+    setAddress(`${data.results[0].address1}${data.results[0].address2}${data.results[0].address3}`);
+  };
 
   return (
     <>
@@ -82,6 +97,38 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
             maxLength: paymentDataValidations.name.maxLength,
             pattern: paymentDataValidations.name.pattern
           })}
+        />
+
+        <InputField
+          type="number"
+          label="郵便番号"
+          placeholder="1111111"
+          required={true}
+          inputProps={{
+            ...register("postCode", {
+              required: paymentDataValidations.postCode.required,
+              min: paymentDataValidations.postCode.min,
+              max: paymentDataValidations.postCode.max
+            })
+          }}
+          onChange={(e) => searchAddress(e)}
+        />
+        {errors.postCode && postCodeErrorMessages(errors.postCode)}
+
+        <InputField
+          type="text"
+          required={true}
+          placeholder="埼玉県〇〇市〇〇1-1-12"
+          label="都道府県・市区町村・番地"
+          guidance="数字と記号は半角で入力してください"
+          defaultValue={address}
+          inputProps={{
+            ...register("address", {
+              required: paymentDataValidations.address.required,
+              minLength: paymentDataValidations.address.minLength,
+              maxLength: paymentDataValidations.address.maxLength
+            })
+          }}
         />
 
         <button type="submit">送信</button>

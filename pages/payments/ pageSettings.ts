@@ -3,4 +3,7 @@ export type PaymentDataInputValues = {
   securityCode: number;
   familyName: string;
   givenName: string;
+  postCode: string;
+  address: string;
+  buildingName: string;
 };

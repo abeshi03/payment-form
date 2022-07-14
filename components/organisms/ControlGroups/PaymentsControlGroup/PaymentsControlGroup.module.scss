@@ -1,4 +1,9 @@
 .paymentControlGroup {
   display: grid;
   row-gap: 20px;
+
+  .nameField {
+    display: flex;
+    column-gap: 20px;
+  }
 }

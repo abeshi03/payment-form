@@ -80,7 +80,7 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           {errors.securityCode && securityCodeErrorMessages(errors.securityCode)}
         </div>
 
-        <div>
+        <div className={styles.nameField}>
           <InputField
             type="text"
             required={true}

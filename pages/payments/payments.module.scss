@@ -2,4 +2,17 @@
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 40px;
+
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+
+    padding-bottom: 7px;
+    border-bottom: 1px solid black;
+  }
+
+  .paymentControlGroup {
+    margin-top: 30px;
+  }
 }

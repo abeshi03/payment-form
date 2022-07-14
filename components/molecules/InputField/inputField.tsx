@@ -19,6 +19,7 @@ type Props = {
   defaultValue?: string | number;
   autoComplete?: string;
   className?: string;
+  value?: string;
   inputProps: React.HTMLAttributes<HTMLInputElement>;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -35,6 +36,7 @@ export const InputField: FC<Props> = memo((props) => {
     autoComplete,
     className,
     onChange,
+    value,
     inputProps
   } = props;
 
@@ -45,6 +47,7 @@ export const InputField: FC<Props> = memo((props) => {
       <input
         {...inputProps}
         onChange={onChange}
+        value={value}
         className={`${className} ${styles.inputField}`}
         defaultValue={defaultValue}
         type={type}

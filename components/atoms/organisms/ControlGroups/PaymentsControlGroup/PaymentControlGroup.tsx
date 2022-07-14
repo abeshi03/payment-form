@@ -20,13 +20,13 @@ type Props = {
 };
 
 export const PaymentControlGroup: FC<Props> = memo((props) => {
+  const { className, submitFunction } = props;
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<PaymentDataInputValues>();
-
-  const { className, submitFunction } = props;
 
   const [address, setAddress] = useState("");
 
@@ -42,6 +42,7 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
     setAddress(`${data.results[0].address1}${data.results[0].address2}${data.results[0].address3}`);
   };
 
+  /* --- view ------------------------------------------------------------------------------------------------------- */
   return (
     <>
       <form className={`${className} ${styles.paymentControlGroup}`} onSubmit={handleSubmit(submitFunction)}>

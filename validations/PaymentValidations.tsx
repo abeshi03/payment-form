@@ -1,5 +1,6 @@
 /* --- libs ---------------------------------------------------------------------------------------------------------- */
 import { FieldError } from "react-hook-form";
+import { ErrorMessage } from "../components/atoms/ErrorMessage/ErrorMessage";
 
 export const paymentDataValidations = {
   curdNumber: {
@@ -34,51 +35,51 @@ export const paymentDataValidations = {
 export const curdNumberErrorMessages = (error: FieldError) => {
   switch (error.type) {
     case "required":
-      return "カード番号は必須です";
+      return <ErrorMessage message="カード番号は必須です" />;
 
     case "min":
-      return "12 ~ 16桁で入力してください";
+      return <ErrorMessage message="12 ~ 16桁で入力してください" />;
 
     case "max":
-      return "12 ~ 16桁で入力してください";
+      return <ErrorMessage message="12 ~ 16桁で入力してください" />;
   }
 };
 
 export const securityCodeErrorMessages = (error: FieldError) => {
   switch (error.type) {
     case "required":
-      return "セキュリティコードは必須です";
+      return <ErrorMessage message="セキュリティコードは必須です" />;
 
     case "min":
-      return "3 ~ 4桁で入力してください";
+      return <ErrorMessage message="3 ~ 4桁で入力してください" />;
 
     case "max":
-      return "3 ~ 4桁で入力してください";
+      return <ErrorMessage message="3 ~ 4桁で入力してください" />;
   }
 };
 
 export const postCodeErrorMessages = (error: FieldError) => {
   switch (error.type) {
     case "required":
-      return "郵便番号は必須です";
+      return <ErrorMessage message="郵便番号は必須です" />;
 
     case "min":
-      return "7桁で入力してください";
+      return <ErrorMessage message="7桁で入力してください" />;
 
     case "max":
-      return "7桁で入力してください";
+      return <ErrorMessage message="7桁で入力してください" />;
   }
 };
 
 export const addressErrorMessages = (error: FieldError) => {
   switch (error.type) {
     case "required":
-      return "住所は必須です";
+      return <ErrorMessage message="住所は必須です" />;
 
     case "min":
-      return `住所は必須は${paymentDataValidations.address.minLength}以上で入力してください`;
+      return <ErrorMessage message={`住所は必須は${paymentDataValidations.address.minLength}以上で入力してください`} />;
 
     case "max":
-      return `住所は必須は${paymentDataValidations.address.maxLength}以内で入力してください`;
+      return <ErrorMessage message={`住所は必須は${paymentDataValidations.address.maxLength}以内で入力してください`} />;
   }
 };

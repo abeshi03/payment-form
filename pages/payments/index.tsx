@@ -17,7 +17,7 @@ const PaymentsPage: NextPage = () => {
 
   return (
     <div className={styles.paymentsPage}>
-      {/*<h1>決済ページ</h1>*/}
+      <h1>決済ページ</h1>
       <PaymentControlGroup submitFunction={submit} />
     </div>
   );

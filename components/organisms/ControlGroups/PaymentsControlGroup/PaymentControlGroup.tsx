@@ -5,14 +5,14 @@ import React, { FC, memo, useState } from "react";
 import styles from "./PaymentsControlGroup.module.scss";
 import { InputField } from "../../../molecules/InputField/inputField";
 import { useForm } from "react-hook-form";
-import { PaymentDataInputValues } from "../../../../../pages/payments/ pageSettings";
+import { PaymentDataInputValues } from "../../../../pages/payments/ pageSettings";
 import {
   addressErrorMessages,
   curdNumberErrorMessages,
   paymentDataValidations,
   postCodeErrorMessages,
   securityCodeErrorMessages
-} from "../../../../../validations/PaymentValidations";
+} from "../../../../validations/PaymentValidations";
 
 type Props = {
   className?: string;

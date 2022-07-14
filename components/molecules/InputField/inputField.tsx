@@ -5,7 +5,7 @@ import React, { memo, FC } from "react";
 import styles from "./inputField.module.scss";
 
 /* --- component ------------------------------------------------------------ */
-import { InputLabel } from "../../InputLabel/InputLabel";
+import { InputLabel } from "../../atoms/InputLabel/InputLabel";
 
 type InputFiledType = "text" | "password" | "email" | "number";
 

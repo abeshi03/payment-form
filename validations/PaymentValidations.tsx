@@ -29,6 +29,16 @@ export const paymentDataValidations = {
     required: true,
     minLength: 5,
     maxLength: 100
+  },
+  dateOfExpiry__year: {
+    required: true,
+    min: new Date().getFullYear(),
+    max: new Date().getFullYear() + 10
+  },
+  dateOfExpiry__month: {
+    required: true,
+    min: 1,
+    max: 12
   }
 };
 
@@ -76,10 +86,36 @@ export const addressErrorMessages = (error: FieldError) => {
     case "required":
       return <ErrorMessage message="住所は必須です" />;
 
-    case "min":
+    case "minLength":
       return <ErrorMessage message={`住所は必須は${paymentDataValidations.address.minLength}以上で入力してください`} />;
 
-    case "max":
+    case "maxLength":
       return <ErrorMessage message={`住所は必須は${paymentDataValidations.address.maxLength}以内で入力してください`} />;
+  }
+};
+
+export const dateOfExpiryYearErrorMessages = (error: FieldError) => {
+  switch (error.type) {
+    case "required":
+      return <ErrorMessage message="有効期限は必須です" />;
+
+    case "min":
+      return <ErrorMessage message={`年は${paymentDataValidations.dateOfExpiry__year.min}以上で入力してください`} />;
+
+    case "max":
+      return <ErrorMessage message={`年は${paymentDataValidations.dateOfExpiry__year.min}以内で入力してください`} />;
+  }
+};
+
+export const dateOfExpiryMonthErrorMessages = (error: FieldError) => {
+  switch (error.type) {
+    case "required":
+      return <ErrorMessage message="有効期限は必須です" />;
+
+    case "min":
+      return <ErrorMessage message={`月は${paymentDataValidations.dateOfExpiry__month.min}以上で入力してください`} />;
+
+    case "max":
+      return <ErrorMessage message={`月は${paymentDataValidations.dateOfExpiry__month.min}以内で入力してください`} />;
   }
 };

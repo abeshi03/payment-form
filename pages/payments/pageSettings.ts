@@ -6,4 +6,6 @@ export type PaymentDataInputValues = {
   postCode: string;
   address: string;
   buildingName: string;
+  dateOfExpiry__year: number;
+  dateOfExpiry__month: number;
 };

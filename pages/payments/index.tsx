@@ -7,7 +7,7 @@ import styles from "./payments.module.scss";
 /* --- components --------------------------------------------------------------------------------------------------- */
 import { PaymentControlGroup } from "../../components/organisms/ControlGroups/PaymentsControlGroup/PaymentControlGroup";
 import { SubmitHandler } from "react-hook-form";
-import { PaymentDataInputValues } from "./ pageSettings";
+import { PaymentDataInputValues } from "./pageSettings";
 import { useCallback } from "react";
 
 const PaymentsPage: NextPage = () => {

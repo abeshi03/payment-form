@@ -1,11 +1,19 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import React, { FC, memo, useState } from "react";
+import Select from "react-select";
+import { useForm, Controller } from "react-hook-form";
 
 /* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./PaymentsControlGroup.module.scss";
+
+/* --- components --------------------------------------------------------------------------------------------------- */
 import { InputField } from "../../../molecules/InputField/inputField";
-import { useForm } from "react-hook-form";
-import { PaymentDataInputValues } from "../../../../pages/payments/ pageSettings";
+
+/* --- types -------------------------------------------------------------------------------------------------------- */
+import { PaymentDataInputValues } from "../../../../pages/payments/pageSettings";
+import { SelectField } from "../../../../libs/ReactSelect";
+
+/* --- validations --------------------------------------------------------------------------------------------------- */
 import {
   addressErrorMessages,
   curdNumberErrorMessages,
@@ -25,12 +33,14 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors }
   } = useForm<PaymentDataInputValues>({
     mode: "onBlur",
     reValidateMode: "onBlur"
   });
 
+  /* --- 郵便番号 ----------------------------------------------------------------------------------------------------- */
   const [address, setAddress] = useState("");
 
   const searchAddress = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -44,6 +54,18 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
 
     setAddress(`${data.results[0].address1}${data.results[0].address2}${data.results[0].address3}`);
   };
+
+  /* --- セレクトフィールド --------------------------------------------------------------------------------------------- */
+  const currentYear = new Date().getFullYear();
+  const yearOptions: SelectField.Option<number>[] = [...Array(10)].map((_, index) => ({
+    label: currentYear + index,
+    value: currentYear + index
+  }));
+
+  const monthOptions: SelectField.Option<number>[] = [...Array(12)].map((_, index) => ({
+    label: index + 1,
+    value: index + 1
+  }));
 
   /* --- view ------------------------------------------------------------------------------------------------------- */
   return (
@@ -143,6 +165,44 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           />
           {errors.address && addressErrorMessages(errors.address)}
         </div>
+
+        <Controller
+          control={control}
+          name="dateOfExpiry__year"
+          rules={{
+            required: paymentDataValidations.dateOfExpiry__year.required,
+            min: paymentDataValidations.dateOfExpiry__year.min,
+            max: paymentDataValidations.dateOfExpiry__year.max
+          }}
+          render={({ field: { onChange, onBlur, ref } }) => (
+            <Select
+              placeholder="有効期限(年)"
+              options={yearOptions}
+              onBlur={onBlur}
+              ref={ref}
+              onChange={(newSelect) => onChange(newSelect?.value)}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="dateOfExpiry__month"
+          rules={{
+            required: paymentDataValidations.dateOfExpiry__month.required,
+            min: paymentDataValidations.dateOfExpiry__month.min,
+            max: paymentDataValidations.dateOfExpiry__month.max
+          }}
+          render={({ field: { onChange, onBlur, ref } }) => (
+            <Select
+              placeholder="有効期限(月)"
+              options={monthOptions}
+              onBlur={onBlur}
+              ref={ref}
+              onChange={(newSelect) => onChange(newSelect?.value)}
+            />
+          )}
+        />
 
         <button type="submit">送信</button>
       </form>

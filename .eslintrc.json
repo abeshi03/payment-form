@@ -21,6 +21,7 @@
       }
     ],
     "no-unreachable": "error",
+    "@typescript-eslint/no-namespace": "off",
     "no-console": [ "warn", {"allow": ["warn", "info", "error"]} ],
     "@typescript-eslint/no-unused-vars": ["warn"],
     "no-restricted-syntax": [

@@ -1,14 +1,16 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import { NextPage } from "next";
+import { useCallback } from "react";
+import { SubmitHandler } from "react-hook-form";
 
 /* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./payments.module.scss";
 
 /* --- components --------------------------------------------------------------------------------------------------- */
 import { PaymentControlGroup } from "../../components/organisms/ControlGroups/PaymentsControlGroup/PaymentControlGroup";
-import { SubmitHandler } from "react-hook-form";
+
+/* --- types -------------------------------------------------------------------------------------------------------- */
 import { PaymentDataInputValues } from "./pageSettings";
-import { useCallback } from "react";
 
 const PaymentsPage: NextPage = () => {
   const submit: SubmitHandler<PaymentDataInputValues> = useCallback(async (inputValues) => {

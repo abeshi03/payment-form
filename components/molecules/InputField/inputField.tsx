@@ -41,14 +41,14 @@ export const InputField: FC<Props> = memo((props) => {
   } = props;
 
   return (
-    <div className={styles.inputFieldContainer}>
+    <div className={`${className} ${styles.inputFieldContainer}`}>
       <InputLabel required={required} label={label} />
 
       <input
         {...inputProps}
         onChange={onChange}
         value={value}
-        className={`${className} ${styles.inputField}`}
+        className={styles.inputField}
         defaultValue={defaultValue}
         type={type}
         placeholder={placeholder}

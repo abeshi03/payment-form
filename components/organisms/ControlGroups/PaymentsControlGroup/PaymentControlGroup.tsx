@@ -17,6 +17,8 @@ import { SelectField } from "../../../../libs/ReactSelect";
 import {
   addressErrorMessages,
   curdNumberErrorMessages,
+  dateOfExpiryMonthErrorMessages,
+  dateOfExpiryYearErrorMessages,
   paymentDataValidations,
   postCodeErrorMessages,
   securityCodeErrorMessages
@@ -40,7 +42,7 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
     reValidateMode: "onBlur"
   });
 
-  /* --- 郵便番号 ----------------------------------------------------------------------------------------------------- */
+  /* ---住所検索 ------------------------------------------------------------------------------------------------------ */
   const [address, setAddress] = useState("");
 
   const searchAddress = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -71,36 +73,80 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
   return (
     <>
       <form className={`${className} ${styles.paymentControlGroup}`} onSubmit={handleSubmit(submitFunction)}>
-        <div>
-          <InputField
-            label="カード番号"
-            placeholder="1111111111111111"
-            guidance="半角数字で入力してください(ハイフンなし)"
-            type="number"
-            required={true}
-            inputProps={register("cardNumber", {
-              required: paymentDataValidations.curdNumber.required,
-              min: paymentDataValidations.curdNumber.min,
-              max: paymentDataValidations.curdNumber.max
-            })}
-          />
-          {errors.cardNumber && curdNumberErrorMessages(errors.cardNumber)}
-        </div>
+        <InputField
+          className={styles.inputField}
+          label="カード番号"
+          placeholder="1111111111111111"
+          guidance="半角数字で入力してください(ハイフンなし)"
+          type="number"
+          required={true}
+          inputProps={register("cardNumber", {
+            required: paymentDataValidations.curdNumber.required,
+            min: paymentDataValidations.curdNumber.min,
+            max: paymentDataValidations.curdNumber.max
+          })}
+        />
+        {errors.cardNumber && curdNumberErrorMessages(errors.cardNumber)}
 
-        <div>
-          <InputField
-            label="セキュリティコード"
-            placeholder="123"
-            type="number"
-            required={true}
-            inputProps={register("securityCode", {
-              required: paymentDataValidations.securityCode.required,
-              min: paymentDataValidations.securityCode.min,
-              max: paymentDataValidations.securityCode.max
-            })}
+        <div className={styles.dateOfExpiry}>
+          <Controller
+            control={control}
+            name="dateOfExpiry__year"
+            rules={{
+              required: paymentDataValidations.dateOfExpiry__year.required,
+              min: paymentDataValidations.dateOfExpiry__year.min,
+              max: paymentDataValidations.dateOfExpiry__year.max
+            }}
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <Select
+                instanceId="selectbox"
+                placeholder="有効期限(年)"
+                options={yearOptions}
+                onBlur={onBlur}
+                ref={ref}
+                onChange={(newSelect) => onChange(newSelect?.value)}
+              />
+            )}
           />
-          {errors.securityCode && securityCodeErrorMessages(errors.securityCode)}
+
+          <span className={styles.separate}>/</span>
+
+          <Controller
+            control={control}
+            name="dateOfExpiry__month"
+            rules={{
+              required: paymentDataValidations.dateOfExpiry__month.required,
+              min: paymentDataValidations.dateOfExpiry__month.min,
+              max: paymentDataValidations.dateOfExpiry__month.max
+            }}
+            render={({ field: { onChange, onBlur, ref } }) => (
+              <Select
+                instanceId="selectbox"
+                placeholder="有効期限(月)"
+                options={monthOptions}
+                onBlur={onBlur}
+                ref={ref}
+                onChange={(newSelect) => onChange(newSelect?.value)}
+              />
+            )}
+          />
         </div>
+        {errors.dateOfExpiry__month && dateOfExpiryMonthErrorMessages(errors.dateOfExpiry__month)}
+        {errors.dateOfExpiry__year && dateOfExpiryYearErrorMessages(errors.dateOfExpiry__year)}
+
+        <InputField
+          className={styles.inputField}
+          label="セキュリティコード"
+          placeholder="123"
+          type="number"
+          required={true}
+          inputProps={register("securityCode", {
+            required: paymentDataValidations.securityCode.required,
+            min: paymentDataValidations.securityCode.min,
+            max: paymentDataValidations.securityCode.max
+          })}
+        />
+        {errors.securityCode && securityCodeErrorMessages(errors.securityCode)}
 
         <div className={styles.nameField}>
           <InputField
@@ -132,79 +178,41 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           />
         </div>
 
-        <div>
-          <InputField
-            type="number"
-            label="郵便番号"
-            placeholder="1111111"
-            required={true}
-            inputProps={register("postCode", {
-              required: paymentDataValidations.postCode.required,
-              min: paymentDataValidations.postCode.min,
-              max: paymentDataValidations.postCode.max
-            })}
-            onChange={(e) => searchAddress(e)}
-          />
-          {errors.postCode && postCodeErrorMessages(errors.postCode)}
-        </div>
-
-        <div>
-          <InputField
-            type="text"
-            required={true}
-            placeholder="埼玉県〇〇市〇〇1-1-12"
-            label="都道府県・市区町村・番地"
-            guidance="数字と記号は半角で入力してください"
-            inputProps={register("address", {
-              required: paymentDataValidations.address.required,
-              minLength: paymentDataValidations.address.minLength,
-              maxLength: paymentDataValidations.address.maxLength
-            })}
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          {errors.address && addressErrorMessages(errors.address)}
-        </div>
-
-        <Controller
-          control={control}
-          name="dateOfExpiry__year"
-          rules={{
-            required: paymentDataValidations.dateOfExpiry__year.required,
-            min: paymentDataValidations.dateOfExpiry__year.min,
-            max: paymentDataValidations.dateOfExpiry__year.max
-          }}
-          render={({ field: { onChange, onBlur, ref } }) => (
-            <Select
-              placeholder="有効期限(年)"
-              options={yearOptions}
-              onBlur={onBlur}
-              ref={ref}
-              onChange={(newSelect) => onChange(newSelect?.value)}
-            />
-          )}
+        <InputField
+          className={styles.inputField}
+          type="number"
+          label="郵便番号"
+          placeholder="1111111"
+          required={true}
+          inputProps={register("postCode", {
+            required: paymentDataValidations.postCode.required,
+            min: paymentDataValidations.postCode.min,
+            max: paymentDataValidations.postCode.max
+          })}
+          onChange={(e) => searchAddress(e)}
         />
+        {errors.postCode && postCodeErrorMessages(errors.postCode)}
 
-        <Controller
-          control={control}
-          name="dateOfExpiry__month"
-          rules={{
-            required: paymentDataValidations.dateOfExpiry__month.required,
-            min: paymentDataValidations.dateOfExpiry__month.min,
-            max: paymentDataValidations.dateOfExpiry__month.max
-          }}
-          render={({ field: { onChange, onBlur, ref } }) => (
-            <Select
-              placeholder="有効期限(月)"
-              options={monthOptions}
-              onBlur={onBlur}
-              ref={ref}
-              onChange={(newSelect) => onChange(newSelect?.value)}
-            />
-          )}
+        <InputField
+          className={styles.inputField}
+          type="text"
+          required={true}
+          placeholder="埼玉県〇〇市〇〇1-1-12"
+          label="都道府県・市区町村・番地"
+          guidance="数字と記号は半角で入力してください"
+          inputProps={register("address", {
+            required: paymentDataValidations.address.required,
+            minLength: paymentDataValidations.address.minLength,
+            maxLength: paymentDataValidations.address.maxLength
+          })}
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
         />
+        {errors.address && addressErrorMessages(errors.address)}
 
-        <button type="submit">送信</button>
+        <button className={styles.submitButton} type="submit">
+          送信
+        </button>
       </form>
     </>
   );

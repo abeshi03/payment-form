@@ -1,7 +1,14 @@
+/* --- libs --------------------------------------------------------------------------------------------------------- */
 import { NextPage } from "next";
-import styles from "./Home.module.scss";
 import { useEffect, useState } from "react";
+
+/* --- assets -------------------------------------------------------------------------------------------------------- */
+import styles from "./Home.module.scss";
+
+/* --- types --------------------------------------------------------------------------------------------------------- */
 import { Product } from "../types/Product";
+
+/* --- components ---------------------------------------------------------------------------------------------------- */
 import { ProductCard } from "../components/molecules/ProductCard/ProductCard";
 
 const Home: NextPage = () => {

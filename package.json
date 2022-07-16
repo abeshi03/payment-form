@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api": "json-server --watch mock/db.json --port 3004"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "5.30.6",
@@ -14,6 +15,7 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-jsx-a11y": "6.6.0",
     "eslint-plugin-prettier": "4.2.1",
+    "json-server": "0.17.0",
     "next": "12.2.2",
     "prettier": "2.7.1",
     "react": "18.2.0",

@@ -1,0 +1,27 @@
+.header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .cart {
+    display: inline-block;
+    padding: 15px;
+    border: 1px solid black;
+  }
+
+  .count {
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    border-radius: 100%;
+
+    background: red;
+    color: white;
+    font-size: 12px;
+  }
+}

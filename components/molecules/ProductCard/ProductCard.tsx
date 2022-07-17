@@ -1,6 +1,9 @@
+/* --- libs --------------------------------------------------------------------------------------------------------- */
 import { FC, memo } from "react";
 import styles from "./ProductCard.module.scss";
 import { Product } from "../../../types/Product";
+import { useRecoilState } from "recoil";
+import { cartState } from "../../../stores/cart";
 
 type Props = {
   product: Product;
@@ -8,6 +11,15 @@ type Props = {
 
 export const ProductCard: FC<Props> = memo((props) => {
   const { product } = props;
+
+  const [cart, setCart] = useRecoilState(cartState);
+
+  const addToCart = (product: Product): void => {
+    setCart({
+      products: [...cart.products, product],
+      totalPrice: cart.totalPrice + product.price
+    });
+  };
 
   return (
     <div className={styles.productCard}>
@@ -18,7 +30,9 @@ export const ProductCard: FC<Props> = memo((props) => {
       ></div>
       <h2 className={styles.name}>{product.name}</h2>
       <p className={styles.price}>{product.price}円</p>
-      <button className={styles.button}>カードに入れる</button>
+      <button onClick={() => addToCart(product)} className={styles.button}>
+        カードに入れる
+      </button>
     </div>
   );
 });

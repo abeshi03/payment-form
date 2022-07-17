@@ -5,9 +5,7 @@ import { ErrorMessage } from "../components/atoms/ErrorMessage/ErrorMessage";
 export const paymentDataValidations = {
   curdNumber: {
     required: true,
-    min: 100000000000,
-    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
-    max: 9999999999999999
+    pattern: /^\d{12,16}$/
   },
   securityCode: {
     required: true,
@@ -47,11 +45,8 @@ export const curdNumberErrorMessages = (error: FieldError) => {
     case "required":
       return <ErrorMessage message="カード番号は必須です" />;
 
-    case "min":
-      return <ErrorMessage message="12 ~ 16桁で入力してください" />;
-
-    case "max":
-      return <ErrorMessage message="12 ~ 16桁で入力してください" />;
+    case "pattern":
+      return <ErrorMessage message="12 ~ 16桁の数字で入力してください" />;
   }
 };
 

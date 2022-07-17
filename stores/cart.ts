@@ -8,7 +8,8 @@ export type Cart = {
 };
 
 const initialState: Cart = {
-  products: [{ name: "test", id: 1, price: 3 }],
+  // products: [{ name: "test", id: 1, price: 3 }],
+  products: [],
   totalPrice: 0
 };
 

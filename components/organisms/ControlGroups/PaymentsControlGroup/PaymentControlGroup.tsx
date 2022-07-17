@@ -50,7 +50,7 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
     if (postCode.length < 7) return;
 
     const res = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postCode}`);
-    const data: { results: { address1: string; address2: string; address3: string }[] } = await res.json();
+    const data: { results: { address1: string; address2: string; address3: string }[] | null } = await res.json();
 
     if (!data.results) return;
 
@@ -78,12 +78,11 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
           label="カード番号"
           placeholder="1111111111111111"
           guidance="半角数字で入力してください(ハイフンなし)"
-          type="number"
+          type="text"
           required={true}
           inputProps={register("cardNumber", {
             required: paymentDataValidations.curdNumber.required,
-            min: paymentDataValidations.curdNumber.min,
-            max: paymentDataValidations.curdNumber.max
+            pattern: paymentDataValidations.curdNumber.pattern
           })}
         />
         {errors.cardNumber && curdNumberErrorMessages(errors.cardNumber)}

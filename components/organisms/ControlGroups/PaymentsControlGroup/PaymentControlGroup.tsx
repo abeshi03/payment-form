@@ -1,5 +1,5 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
-import React, { FC, memo, useState } from "react";
+import React, { FC, memo } from "react";
 import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
 
@@ -36,6 +36,7 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors }
   } = useForm<PaymentDataInputValues>({
     mode: "onBlur",
@@ -43,8 +44,6 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
   });
 
   /* ---住所検索 ------------------------------------------------------------------------------------------------------ */
-  const [address, setAddress] = useState("");
-
   const searchAddress = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     const postCode = e.target.value;
     if (postCode.length < 7) return;
@@ -54,7 +53,7 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
 
     if (!data.results) return;
 
-    setAddress(`${data.results[0].address1}${data.results[0].address2}${data.results[0].address3}`);
+    setValue("address", `${data.results[0].address1}${data.results[0].address2}${data.results[0].address3}`);
   };
 
   /* --- セレクトフィールド --------------------------------------------------------------------------------------------- */
@@ -204,8 +203,6 @@ export const PaymentControlGroup: FC<Props> = memo((props) => {
             minLength: paymentDataValidations.address.minLength,
             maxLength: paymentDataValidations.address.maxLength
           })}
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
         />
         {errors.address && addressErrorMessages(errors.address)}
 

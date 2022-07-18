@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export const Header: FC = memo(() => {
   const cart = useRecoilValue(cartState);
+  console.log(cart);
 
   return (
     <>

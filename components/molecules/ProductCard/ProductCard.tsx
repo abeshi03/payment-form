@@ -15,10 +15,27 @@ export const ProductCard: FC<Props> = memo((props) => {
   const [cart, setCart] = useRecoilState(cartState);
 
   const addToCart = (product: Product): void => {
-    setCart({
-      products: [...cart.products, product],
-      totalPrice: cart.totalPrice + product.price
-    });
+    const newItem = cart.products.find((_product) => _product.id === product.id);
+
+    if (!newItem) {
+      product.quantity = 1;
+      setCart({
+        products: [...cart.products, product],
+        totalPrice: cart.totalPrice + product.price
+      });
+    } else {
+      setCart({
+        products: cart.products.map((_product) =>
+          _product.id === newItem.id
+            ? {
+                ...product,
+                quantity: _product.quantity + 1
+              }
+            : product
+        ),
+        totalPrice: cart.totalPrice + product.price
+      });
+    }
   };
 
   return (

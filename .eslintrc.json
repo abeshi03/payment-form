@@ -24,6 +24,11 @@
     "@typescript-eslint/no-namespace": "off",
     "no-console": [ "warn", {"allow": ["warn", "info", "error"]} ],
     "@typescript-eslint/no-unused-vars": ["warn"],
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "hrefLeft", "hrefRight" ],
+      "aspects": [ "invalidHref", "preferButton" ]
+    }],
     "no-restricted-syntax": [
       "error",
       {

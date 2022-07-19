@@ -2,17 +2,20 @@
 import { NextPage } from "next";
 import { useCallback } from "react";
 import { SubmitHandler } from "react-hook-form";
+import { useRecoilValue } from "recoil";
 
 /* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./payments.module.scss";
+
+/* --- globalState -------------------------------------------------------------------------------------------------- */
+import { cartState } from "../../stores/cart";
 
 /* --- components --------------------------------------------------------------------------------------------------- */
 import { PaymentControlGroup } from "../../components/organisms/ControlGroups/PaymentsControlGroup/PaymentControlGroup";
 
 /* --- types -------------------------------------------------------------------------------------------------------- */
 import { PaymentDataInputValues } from "./pageSettings";
-import { useRecoilValue } from "recoil";
-import { cartState } from "../../stores/cart";
+import { Cart } from "../../components/molecules/Cart/Cart";
 
 const PaymentsPage: NextPage = () => {
   const cart = useRecoilValue(cartState);
@@ -21,30 +24,18 @@ const PaymentsPage: NextPage = () => {
     console.log(inputValues);
   }, []);
 
-  const cartItems = () => {
-    if (cart.products.length === 0) return <p>カートにアイテムが入っていません</p>;
-    return (
-      <div className={styles.cartItemsFlow}>
-        {cart.products.map((product) => (
-          <div key={product.id} className={styles.cartItem}>
-            <div
-              className={styles.image}
-              role="img"
-              style={{ backgroundImage: `url(https://dummyimage.com/100x100/03488d/fff})` }}
-            ></div>
-            <h2 className={styles.name}>{product.name}</h2>
-            <p className={styles.price}>{product.price}円</p>
-          </div>
-        ))}
-        <p>合計金額{cart.totalPrice}円</p>
-      </div>
-    );
-  };
-
   return (
     <div className={styles.paymentsPage}>
       <h2 className={styles.heading}>カート</h2>
-      {cartItems()}
+
+      <div className={styles.cartItemsFlow}>
+        {cart.products.length === 0 && <p>カートにアイテムが入っていません</p>}
+        {cart.products.map((product) => (
+          <Cart product={product} key={product.id} />
+        ))}
+        <div className={styles.totalPrice}>{cart.totalPrice}円</div>
+      </div>
+
       <h2 className={styles.heading}>購入する</h2>
       <PaymentControlGroup className={styles.paymentControlGroup} submitFunction={submit} />
     </div>

@@ -1,9 +1,14 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import { FC, memo } from "react";
+
+/* --- globalState -------------------------------------------------------------------------------------------------- */
+import { useCart } from "../../../stores/cart";
+
+/* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./ProductCard.module.scss";
+
+/* --- types --------------------------------------------------------------------------------------------------------- */
 import { Product } from "../../../types/Product";
-import { useRecoilState } from "recoil";
-import { cartState } from "../../../stores/cart";
 
 type Props = {
   product: Product;
@@ -12,31 +17,7 @@ type Props = {
 export const ProductCard: FC<Props> = memo((props) => {
   const { product } = props;
 
-  const [cart, setCart] = useRecoilState(cartState);
-
-  const addToCart = (product: Product): void => {
-    const newItem = cart.products.find((_product) => _product.id === product.id);
-
-    if (!newItem) {
-      product.quantity = 1;
-      setCart({
-        products: [...cart.products, product],
-        totalPrice: cart.totalPrice + product.price
-      });
-    } else {
-      setCart({
-        products: cart.products.map((_product) =>
-          _product.id === newItem.id
-            ? {
-                ...product,
-                quantity: _product.quantity + 1
-              }
-            : product
-        ),
-        totalPrice: cart.totalPrice + product.price
-      });
-    }
-  };
+  const { addToCart } = useCart();
 
   return (
     <div className={styles.productCard}>

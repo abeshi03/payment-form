@@ -1,8 +1,13 @@
+/* --- libs --------------------------------------------------------------------------------------------------------- */
 import { FC, memo } from "react";
-import styles from "./Header.module.scss";
 import { useRecoilValue } from "recoil";
-import { cartState } from "../../../stores/cart";
 import Link from "next/link";
+
+/* --- assets ------------------------------------------------------------------------------------------------------- */
+import styles from "./Header.module.scss";
+
+/* --- globalState -------------------------------------------------------------------------------------------------- */
+import { cartState } from "../../../stores/cart";
 
 export const Header: FC = memo(() => {
   const cart = useRecoilValue(cartState);

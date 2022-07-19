@@ -17,7 +17,7 @@ type Props = {
 export const Cart: FC<Props> = memo((props) => {
   const { product } = props;
 
-  const { addCart } = useCart();
+  const { addCart, removeCart } = useCart();
 
   return (
     <div className={styles.cartItem}>
@@ -32,10 +32,11 @@ export const Cart: FC<Props> = memo((props) => {
         <span className={styles.increment} onClick={() => addCart(product)}>
           +
         </span>
-        <span className={styles.decrement}>-</span>
+        <span className={styles.decrement} onClick={() => removeCart(product)}>
+          -
+        </span>
       </div>
       <p className={styles.price}>{product.price * product.quantity}円</p>
-      <div className={styles.removeCart}>カートから外す</div>
     </div>
   );
 });

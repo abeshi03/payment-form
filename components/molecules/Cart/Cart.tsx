@@ -17,28 +17,26 @@ type Props = {
 export const Cart: FC<Props> = memo((props) => {
   const { product } = props;
 
-  const { addToCart } = useCart();
+  const { addCart } = useCart();
 
   return (
-    <>
-      <div key={product.id} className={styles.cartItem}>
-        <div
-          className={styles.image}
-          role="img"
-          style={{ backgroundImage: `url(https://dummyimage.com/100x100/03488d/fff})` }}
-        ></div>
-        <h2 className={styles.name}>{product.name}</h2>
-        <p className={styles.price}>数量: {product.quantity}</p>
-        <div className={styles.countControl}>
-          <span className={styles.increment} onClick={() => addToCart(product)}>
-            +
-          </span>
-          <span className={styles.decrement}>-</span>
-        </div>
-        <p className={styles.price}>{product.price * product.quantity}円</p>
-        <div className={styles.removeCart}>カートから外す</div>
+    <div className={styles.cartItem}>
+      <div
+        className={styles.image}
+        role="img"
+        style={{ backgroundImage: `url(https://dummyimage.com/100x100/03488d/fff})` }}
+      ></div>
+      <h2 className={styles.name}>{product.name}</h2>
+      <p className={styles.price}>数量: {product.quantity}</p>
+      <div className={styles.countControl}>
+        <span className={styles.increment} onClick={() => addCart(product)}>
+          +
+        </span>
+        <span className={styles.decrement}>-</span>
       </div>
-    </>
+      <p className={styles.price}>{product.price * product.quantity}円</p>
+      <div className={styles.removeCart}>カートから外す</div>
+    </div>
   );
 });
 

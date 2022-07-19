@@ -17,7 +17,7 @@ type Props = {
 export const ProductCard: FC<Props> = memo((props) => {
   const { product } = props;
 
-  const { addToCart } = useCart();
+  const { addCart } = useCart();
 
   return (
     <div className={styles.productCard}>
@@ -28,7 +28,7 @@ export const ProductCard: FC<Props> = memo((props) => {
       ></div>
       <h2 className={styles.name}>{product.name}</h2>
       <p className={styles.price}>{product.price}円</p>
-      <button onClick={() => addToCart(product)} className={styles.button}>
+      <button onClick={() => addCart(product)} className={styles.button}>
         カードに入れる
       </button>
     </div>

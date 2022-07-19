@@ -24,6 +24,8 @@ const PaymentsPage: NextPage = () => {
     console.log(inputValues);
   }, []);
 
+  console.log(cart.products);
+
   return (
     <div className={styles.paymentsPage}>
       <h2 className={styles.heading}>カート</h2>

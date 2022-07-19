@@ -22,7 +22,7 @@ export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
 
   /* --- カートへ商品追加 ----------------------------------------------------------------------------------------------- */
-  const addToCart = (product: Product): void => {
+  const addCart = (product: Product): void => {
     const newItem = cart.products.find((_product) => _product.id === product.id);
 
     // カートに商品が入っていない場合
@@ -36,17 +36,12 @@ export const useCart = () => {
       // カートに商品が入っている場合
       setCart({
         products: cart.products.map((_product) =>
-          _product.id === newItem.id
-            ? {
-                ..._product,
-                quantity: _product.quantity + 1
-              }
-            : product
+          _product.id === newItem.id ? Object.assign({}, _product, { quantity: _product.quantity + 1 }) : _product
         ),
         totalPrice: cart.totalPrice + product.price
       });
     }
   };
 
-  return { addToCart };
+  return { addCart };
 };

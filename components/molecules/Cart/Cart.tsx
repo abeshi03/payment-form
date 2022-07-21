@@ -29,24 +29,12 @@ export const Cart: FC<Props> = memo((props) => {
       <h2 className={styles.name}>{product.name}</h2>
       <p className={styles.price}>数量: {product.quantity}</p>
       <div className={styles.countControl}>
-        <span
-          className={styles.increment}
-          role="button"
-          tabIndex={0}
-          onClick={() => addCart(product)}
-          onKeyDown={() => addCart(product)}
-        >
+        <button className={styles.increment} tabIndex={0} onClick={() => addCart(product)}>
           +
-        </span>
-        <span
-          className={styles.decrement}
-          role="button"
-          tabIndex={0}
-          onClick={() => removeCart(product)}
-          onKeyDown={() => removeCart(product)}
-        >
+        </button>
+        <button className={styles.decrement} tabIndex={0} onClick={() => removeCart(product)}>
           -
-        </span>
+        </button>
       </div>
       <p className={styles.price}>{product.price * product.quantity}円</p>
     </div>

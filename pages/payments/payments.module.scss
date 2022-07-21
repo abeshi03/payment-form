@@ -13,4 +13,21 @@
   .paymentControlGroup {
     margin-top: 30px;
   }
+
+  .cartItemsFlow {
+
+    display: grid;
+    row-gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .totalPrice {
+    font-size: 18px;
+    font-weight: bold;
+
+    color: green;
+
+    margin-left: auto;
+  }
 }

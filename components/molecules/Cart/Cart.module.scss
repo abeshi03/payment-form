@@ -1,0 +1,52 @@
+.cartItem {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto 1fr;
+  column-gap: 30px;
+  row-gap: 15px;
+}
+
+.image {
+  grid-row: span 5;
+
+  aspect-ratio: 4/3;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.countControl {
+  display: flex;
+  column-gap: 20px;
+  font-size: 18px;
+}
+
+.increment {
+  cursor: pointer;
+
+  &:hover {
+    color: green;
+  }
+}
+
+.decrement {
+  cursor: pointer;
+
+  &:hover {
+    color: green;
+  }
+}
+
+
+.removeCart {
+  text-decoration: underline;
+  color: green;
+
+  cursor: pointer;
+}

@@ -1,0 +1,33 @@
+.paymentsPage {
+  max-width: 700px;
+  margin: 40px auto 90px auto;
+
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+
+    padding-bottom: 7px;
+    border-bottom: 1px solid black;
+  }
+
+  .paymentControlGroup {
+    margin-top: 30px;
+  }
+
+  .cartItemsFlow {
+
+    display: grid;
+    row-gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .totalPrice {
+    font-size: 18px;
+    font-weight: bold;
+
+    color: green;
+
+    margin-left: auto;
+  }
+}

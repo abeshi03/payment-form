@@ -1,0 +1,24 @@
+.productCard {
+
+  .image {
+    aspect-ratio: 4/3;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .price {
+    color: rebeccapurple;
+    margin-top: 10px;
+  }
+
+  .button {
+    margin-top: 20px;
+  }
+}

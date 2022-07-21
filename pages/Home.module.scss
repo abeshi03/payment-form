@@ -1,0 +1,22 @@
+.home {
+
+  max-width: 900px;
+  margin: 40px auto;
+
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+  }
+
+  .cardsFlow {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+
+    margin-top: 30px;
+  }
+}

@@ -1,8 +1,8 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import { NextPage } from "next";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 /* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./payments.module.scss";
@@ -19,10 +19,25 @@ import { Cart } from "../../components/molecules/Cart/Cart";
 import { Product } from "../../types/Product";
 import { parseCookies } from "nookies";
 
-const PaymentsPage: NextPage<{ testProducts: Product[] }> = ({ testProducts }) => {
-  console.log(testProducts);
-  const cart = useRecoilValue(cartState);
+type Props = {
+  cookies: {
+    products: Product[];
+  };
+};
+
+const PaymentsPage: NextPage = (props: Props) => {
+  const { cookies } = props;
+  const [cart, setCart] = useRecoilState(cartState);
   const totalPrice = useRecoilValue(totalPriceSelector);
+
+  useEffect(() => {
+    console.log(cookies.products);
+    if (cookies.products.length > 0) {
+      setCart({
+        products: cookies.products
+      });
+    }
+  }, []);
 
   const submit: SubmitHandler<PaymentDataInputValues> = useCallback(async (inputValues) => {
     console.log(inputValues);
@@ -50,7 +65,7 @@ PaymentsPage.getInitialProps = (ctx) => {
   const cookies = parseCookies(ctx);
   const products: Product[] = JSON.parse({ cookies }.cookies.cart);
   return {
-    testProducts: products
+    cookies: products
   };
 };
 

@@ -1,12 +1,11 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
-import { atom, RecoilState, selector, useRecoilState, useRecoilValue } from "recoil";
-import { parseCookies, setCookie } from "nookies";
+import { atom, RecoilState, selector, useRecoilState } from "recoil";
+import { setCookie } from "nookies";
 
 /* --- types --------------------------------------------------------------------------------------------------------- */
 import { Product } from "../types/Product";
 import { useEffect } from "react";
 import { Cart } from "../components/molecules/Cart/Cart";
-import { string } from "prop-types";
 
 export type Cart = {
   products: Product[];
@@ -34,12 +33,10 @@ export const totalPriceSelector = selector({
 /* --- ロジック ------------------------------------------------------------------------------------------------------- */
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const totalPrice = useRecoilValue(totalPriceSelector);
 
   useEffect(() => {
-    setCookie(null, "totalPrice", String(totalPrice));
     setCookie(null, "cart", JSON.stringify(cart));
-  }, [totalPrice, cart]);
+  }, [cart]);
 
   /* --- カートへ商品追加 ----------------------------------------------------------------------------------------------- */
   const addCart = (product: Product): void => {

@@ -16,8 +16,11 @@ import { PaymentControlGroup } from "../../components/organisms/ControlGroups/Pa
 /* --- types -------------------------------------------------------------------------------------------------------- */
 import { PaymentDataInputValues } from "./pageSettings";
 import { Cart } from "../../components/molecules/Cart/Cart";
+import { Product } from "../../types/Product";
+import { parseCookies } from "nookies";
 
-const PaymentsPage: NextPage = () => {
+const PaymentsPage: NextPage<{ testProducts: Product[] }> = ({ testProducts }) => {
+  console.log(testProducts);
   const cart = useRecoilValue(cartState);
   const totalPrice = useRecoilValue(totalPriceSelector);
 
@@ -41,6 +44,14 @@ const PaymentsPage: NextPage = () => {
       <PaymentControlGroup className={styles.paymentControlGroup} submitFunction={submit} />
     </div>
   );
+};
+
+PaymentsPage.getInitialProps = (ctx) => {
+  const cookies = parseCookies(ctx);
+  const products: Product[] = JSON.parse({ cookies }.cookies.cart);
+  return {
+    testProducts: products
+  };
 };
 
 export default PaymentsPage;

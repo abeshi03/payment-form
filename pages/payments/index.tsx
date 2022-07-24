@@ -8,20 +8,33 @@ import { useRecoilValue } from "recoil";
 import styles from "./payments.module.scss";
 
 /* --- globalState -------------------------------------------------------------------------------------------------- */
-import { cartState } from "../../stores/cart";
+import { cartState, totalPriceSelector } from "../../stores/cart";
 
 /* --- components --------------------------------------------------------------------------------------------------- */
 import { PaymentControlGroup } from "../../components/organisms/ControlGroups/PaymentsControlGroup/PaymentControlGroup";
 
 /* --- types -------------------------------------------------------------------------------------------------------- */
-import { PaymentDataInputValues } from "./pageSettings";
 import { Cart } from "../../components/molecules/Cart/Cart";
+
+export type PaymentDataInputValues = {
+  cardNumber: number;
+  securityCode: number;
+  familyName: string;
+  givenName: string;
+  postCode: string;
+  address: string;
+  buildingName: string;
+  dateOfExpiry__year: number;
+  dateOfExpiry__month: number;
+};
 
 const PaymentsPage: NextPage = () => {
   const cart = useRecoilValue(cartState);
+  const totalPrice = useRecoilValue(totalPriceSelector);
 
   const submit: SubmitHandler<PaymentDataInputValues> = useCallback(async (inputValues) => {
     console.log(inputValues);
+    console.log(totalPrice);
   }, []);
 
   return (
@@ -33,7 +46,7 @@ const PaymentsPage: NextPage = () => {
         {cart.products.map((product) => (
           <Cart product={product} key={product.id} />
         ))}
-        <div className={styles.totalPrice}>{cart.totalPrice}円</div>
+        <div className={styles.totalPrice}>{totalPrice}円</div>
       </div>
 
       <h2 className={styles.heading}>購入する</h2>

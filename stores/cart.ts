@@ -1,17 +1,20 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
-import { atom, RecoilState, useRecoilState } from "recoil";
+import { atom, RecoilState, selector, useRecoilState } from "recoil";
+import { destroyCookie, setCookie } from "nookies";
+import { useEffect } from "react";
 
 /* --- types --------------------------------------------------------------------------------------------------------- */
 import { Product } from "../types/Product";
 
+/* --- components ---------------------------------------------------------------------------------------------------- */
+import { Cart } from "../components/molecules/Cart/Cart";
+
 export type Cart = {
   products: Product[];
-  totalPrice: number;
 };
 
 const initialState: Cart = {
-  products: [],
-  totalPrice: 0
+  products: []
 };
 
 export const cartState: RecoilState<Cart> = atom({
@@ -19,9 +22,27 @@ export const cartState: RecoilState<Cart> = atom({
   default: initialState
 });
 
+export const totalPriceSelector = selector({
+  key: "totalPriceSelector",
+  get: ({ get }) => {
+    const cart = get(cartState);
+    return cart.products.reduce((sum, product) => {
+      return sum + product.price * product.quantity;
+    }, 0);
+  }
+});
+
 /* --- ロジック ------------------------------------------------------------------------------------------------------- */
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
+
+  useEffect(() => {
+    setCookie(null, "cart", JSON.stringify(cart));
+
+    return () => {
+      destroyCookie(null, "cart");
+    };
+  }, [cart]);
 
   /* --- カートへ商品追加 ----------------------------------------------------------------------------------------------- */
   const addCart = (product: Product): void => {
@@ -31,16 +52,14 @@ export const useCart = () => {
     if (!selectItem) {
       product.quantity = 1;
       setCart({
-        products: [...cart.products, product],
-        totalPrice: cart.totalPrice + product.price
+        products: [...cart.products, product]
       });
     } else {
       // カートに商品が入っている場合
       setCart({
         products: cart.products.map((_product) =>
           _product.id === selectItem.id ? Object.assign({}, _product, { quantity: _product.quantity + 1 }) : _product
-        ),
-        totalPrice: cart.totalPrice + product.price
+        )
       });
     }
   };
@@ -58,18 +77,17 @@ export const useCart = () => {
       setCart({
         products: cart.products.map((_product) =>
           _product.id === selectItem.id ? Object.assign({}, _product, { quantity: _product.quantity - 1 }) : _product
-        ),
-        totalPrice: cart.totalPrice - product.price
+        )
       });
     } else {
       // カートから商品を削除する
       const products = [...cart.products];
       const index = products.findIndex((product) => product.id === selectItem.id);
+      if (index === -1) return;
       products.splice(index, 1);
 
       setCart({
-        products,
-        totalPrice: cart.totalPrice - product.price
+        products
       });
     }
   };

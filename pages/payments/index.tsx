@@ -1,8 +1,8 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import { NextPage } from "next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 
 /* --- assets ------------------------------------------------------------------------------------------------------- */
 import styles from "./payments.module.scss";
@@ -14,33 +14,27 @@ import { cartState, totalPriceSelector } from "../../stores/cart";
 import { PaymentControlGroup } from "../../components/organisms/ControlGroups/PaymentsControlGroup/PaymentControlGroup";
 
 /* --- types -------------------------------------------------------------------------------------------------------- */
-import { PaymentDataInputValues } from "./pageSettings";
 import { Cart } from "../../components/molecules/Cart/Cart";
-import { Product } from "../../types/Product";
-import { parseCookies } from "nookies";
 
-type Props = {
-  cookies: {
-    products: Product[];
-  };
+export type PaymentDataInputValues = {
+  cardNumber: number;
+  securityCode: number;
+  familyName: string;
+  givenName: string;
+  postCode: string;
+  address: string;
+  buildingName: string;
+  dateOfExpiry__year: number;
+  dateOfExpiry__month: number;
 };
 
-const PaymentsPage: NextPage = (props: Props) => {
-  const { cookies } = props;
-  const [cart, setCart] = useRecoilState(cartState);
+const PaymentsPage: NextPage = () => {
+  const cart = useRecoilValue(cartState);
   const totalPrice = useRecoilValue(totalPriceSelector);
-
-  useEffect(() => {
-    console.log(cookies.products);
-    if (cookies.products.length > 0) {
-      setCart({
-        products: cookies.products
-      });
-    }
-  }, []);
 
   const submit: SubmitHandler<PaymentDataInputValues> = useCallback(async (inputValues) => {
     console.log(inputValues);
+    console.log(totalPrice);
   }, []);
 
   return (
@@ -59,14 +53,6 @@ const PaymentsPage: NextPage = (props: Props) => {
       <PaymentControlGroup className={styles.paymentControlGroup} submitFunction={submit} />
     </div>
   );
-};
-
-PaymentsPage.getInitialProps = (ctx) => {
-  const cookies = parseCookies(ctx);
-  const products: Product[] = JSON.parse({ cookies }.cookies.cart);
-  return {
-    cookies: products
-  };
 };
 
 export default PaymentsPage;

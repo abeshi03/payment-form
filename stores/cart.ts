@@ -1,10 +1,12 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import { atom, RecoilState, selector, useRecoilState } from "recoil";
-import { setCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
+import { useEffect } from "react";
 
 /* --- types --------------------------------------------------------------------------------------------------------- */
 import { Product } from "../types/Product";
-import { useEffect } from "react";
+
+/* --- components ---------------------------------------------------------------------------------------------------- */
 import { Cart } from "../components/molecules/Cart/Cart";
 
 export type Cart = {
@@ -36,6 +38,10 @@ export const useCart = () => {
 
   useEffect(() => {
     setCookie(null, "cart", JSON.stringify(cart));
+
+    return () => {
+      destroyCookie(null, "cart");
+    };
   }, [cart]);
 
   /* --- カートへ商品追加 ----------------------------------------------------------------------------------------------- */

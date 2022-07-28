@@ -1,8 +1,8 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import type { AppProps } from "next/app";
-import { RecoilRoot, useSetRecoilState } from "recoil";
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
-import { parseCookies } from "nookies";
+import { parseCookies, setCookie } from "nookies";
 
 /* --- globalState --------------------------------------------------------------------------------------------------- */
 import { Cart, cartState } from "../stores/cart";
@@ -24,7 +24,7 @@ function InitApp() {
     const cookies = parseCookies();
 
     if (cookies.cart !== undefined) {
-      const cookiesCart: Cart = JSON.parse({ cookies }.cookies.cart);
+      const cookiesCart: Cart = JSON.parse(cookies.cart);
 
       if (cookiesCart.products.length > 0) {
         setCart({
@@ -36,12 +36,26 @@ function InitApp() {
   return null;
 }
 
+/**
+ * カートが更新されたらクッキーに値を保存する
+ * InitApp同様に定義すると無限ループが起きる為、別関数で定義
+ */
+function WatchCart() {
+  const cart = useRecoilValue(cartState);
+
+  useEffect(() => {
+    setCookie(null, "cart", JSON.stringify(cart));
+  }, [cart]);
+  return null;
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <Header />
       <Component {...pageProps} />;
       <InitApp />
+      <WatchCart />
     </RecoilRoot>
   );
 }

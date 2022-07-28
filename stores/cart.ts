@@ -1,7 +1,5 @@
 /* --- libs --------------------------------------------------------------------------------------------------------- */
 import { atom, RecoilState, selector, useRecoilState } from "recoil";
-import { destroyCookie, setCookie } from "nookies";
-import { useEffect } from "react";
 
 /* --- types --------------------------------------------------------------------------------------------------------- */
 import { Product } from "../types/Product";
@@ -35,14 +33,6 @@ export const totalPriceSelector = selector({
 /* --- ロジック ------------------------------------------------------------------------------------------------------- */
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
-
-  useEffect(() => {
-    setCookie(null, "cart", JSON.stringify(cart));
-
-    return () => {
-      destroyCookie(null, "cart");
-    };
-  }, [cart]);
 
   /* --- カートへ商品追加 ----------------------------------------------------------------------------------------------- */
   const addCart = (product: Product): void => {

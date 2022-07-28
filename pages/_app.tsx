@@ -22,10 +22,9 @@ function InitApp() {
 
   useEffect(() => {
     const cookies = parseCookies();
-    let cookiesCart: Cart;
 
-    if ({ cookies }.cookies.cart !== undefined) {
-      cookiesCart = JSON.parse({ cookies }.cookies.cart);
+    if (cookies.cart !== undefined) {
+      const cookiesCart: Cart = JSON.parse({ cookies }.cookies.cart);
 
       if (cookiesCart.products.length > 0) {
         setCart({

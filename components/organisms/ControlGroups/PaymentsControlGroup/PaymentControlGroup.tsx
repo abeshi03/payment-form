@@ -10,7 +10,7 @@ import styles from "./PaymentsControlGroup.module.scss";
 import { InputField } from "../../../molecules/InputField/inputField";
 
 /* --- types -------------------------------------------------------------------------------------------------------- */
-import { PaymentDataInputValues } from "../../../../pages/payments/pageSettings";
+import { PaymentDataInputValues } from "../../../../pages/payments";
 import { SelectField } from "../../../../libs/ReactSelect";
 
 /* --- validations --------------------------------------------------------------------------------------------------- */

@@ -11,7 +11,6 @@ import { cartState } from "../../../stores/cart";
 
 export const Header: FC = memo(() => {
   const cart = useRecoilValue(cartState);
-  console.log(cart);
 
   return (
     <>

@@ -46,10 +46,12 @@ export const useCart = () => {
       });
     } else {
       // カートに商品が入っている場合
-      setCart({
-        products: cart.products.map((_product) =>
-          _product.id === selectItem.id ? Object.assign({}, _product, { quantity: _product.quantity + 1 }) : _product
-        )
+      setCart((prevCart) => {
+        return {
+          products: prevCart.products.map((_product) =>
+            _product.id === selectItem.id ? { ..._product, quantity: _product.quantity + 1 } : _product
+          )
+        };
       });
     }
   };
@@ -64,10 +66,12 @@ export const useCart = () => {
 
     // カートから商品を-1する
     if (selectItem.quantity > 1) {
-      setCart({
-        products: cart.products.map((_product) =>
-          _product.id === selectItem.id ? Object.assign({}, _product, { quantity: _product.quantity - 1 }) : _product
-        )
+      setCart((prevCart) => {
+        return {
+          products: prevCart.products.map((_product) =>
+            _product.id === selectItem.id ? { ..._product, quantity: _product.quantity - 1 } : _product
+          )
+        };
       });
     } else {
       // カートから商品を削除する
